@@ -1,0 +1,7 @@
+{
+	// Parse configs
+	"Parse": {
+		"app": "",
+		"javascript": ""
+	}
+}
