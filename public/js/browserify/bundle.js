@@ -29293,11 +29293,12 @@ if (typeof window !== 'undefined') {
 
 },{"./App.jsx":256,"react-tap-event-plugin":93,"react/addons":94}],258:[function(require,module,exports){
 var React = require('react/addons');
+var ReactGridLayout = require('react-grid-layout');
 var AppBar = require('material-ui').AppBar;
 var MenuItem = require('material-ui').MenuItem;
 var LeftNav = require('material-ui').LeftNav;
 var Paper = require('material-ui').Paper;
-var ReactGridLayout = require('react-grid-layout');
+var FlatButton = require('material-ui').FlatButton;
 
 var MENU_ITEMS = [
 	{ route: 'get-started', text: 'Get Started' },
@@ -29339,15 +29340,13 @@ module.exports = React.createClass({
 			React.createElement("div", null, 
 				React.createElement(AppBar, {title: "Title", onMenuIconButtonTouchTap: this._toggleLeftNav}), 
 				React.createElement(LeftNav, {ref: "LeftNav", docked: false, menuItems: MENU_ITEMS}), 
-				React.createElement(ReactGridLayout, {className: "layout", cols: 1, rowHeight: 30}, 
-					React.createElement(Paper, {zDepth: 1, key: 1, _grid: {x: 0, y: 0, w: 1, h: 2}}, 
-						React.createElement("p", null, "1")
+				React.createElement(ReactGridLayout, {className: "layout", cols: 12, rowHeight: 30}, 
+					React.createElement(Paper, {innerClassName: "flex-button", zDepth: 1, key: 1, _grid: {x: 0, y: 0, w: 2, h: 6}}, 
+						React.createElement(FlatButton, {primary: true}, 
+							React.createElement("i", {className: "fa fa-plus"})
+						)
 					), 
-					React.createElement(Paper, {zDepth: 1, key: 2, _grid: {x: 0, y: 1, w: 1, h: 2}}, 
-						React.createElement("p", null, "2")
-					), 
-					React.createElement(Paper, {zDepth: 1, key: 3, _grid: {x: 0, y: 2, w: 1, h: 2}}, 
-						React.createElement("p", null, "3")
+					React.createElement(Paper, {zDepth: 1, key: 2, _grid: {x: 2, y: 0, w: 2, h: 6}}
 					)
 				)
 			)
