@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Surf through onboarding",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bpeters/tidalboard.git"
@@ -17,25 +14,30 @@
   },
   "homepage": "https://github.com/bpeters/tidalboard",
   "dependencies": {
+    "body-parser": "^1.12.0",
     "config": "^1.12.0",
-    "express": "^4.12.3",
-    "lodash": "^3.6.0",
-    "material-ui": "^0.7.2",
+    "express": "^4.12.2",
+    "lodash": "^3.5.0",
+    "material-ui": "^0.7.1",
+    "multer": "^0.1.8",
     "node-jsx": "^0.12.4",
-    "parse": "^1.4.1",
+    "node-wit": "^1.1.0",
+    "parse": "^1.3.5",
     "q": "^1.2.0",
-    "react": "^0.13.1",
-    "react-tap-event-plugin": "^0.1.6",
-    "reflux": "^0.2.7",
-    "swig": "^1.4.2"
+    "react": "^0.12.2",
+    "react-tap-event-plugin": "^0.1.4",
+    "reactify": "^1.1.0",
+    "reflux": "^0.2.6",
+    "swig": "^1.4.2",
+    "twilio": "^1.11.1"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-browserify": "^3.6.0",
+    "grunt-browserify": "^3.5.0",
     "grunt-contrib-less": "^1.0.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-nodemon": "^0.4.0",
-    "grunt-react": "^0.12.0",
-    "react-tools": "^0.13.1"
+    "grunt-react": "^0.10.0",
+    "react-tools": "^0.12.2"
   }
 }
