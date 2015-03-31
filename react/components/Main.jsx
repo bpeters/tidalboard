@@ -30,7 +30,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<AppBar title="Title" onMenuIconButtonTouchTap={this.toggleLeftNav} />
+				<AppBar title="Board Title" onMenuIconButtonTouchTap={this.toggleLeftNav} />
 				<LeftNav ref='LeftNav' docked={false} menuItems={MENU_ITEMS} />
 				<ReactGridLayout className="layout" cols={12} rowHeight={30}>
 					<div key={1} _grid={{static: true, x: 0, y: 0, w: 3, h: 6}} >

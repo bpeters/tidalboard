@@ -2641,7 +2641,16 @@ hr {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  flex-direction: column;
+  flex-direction: row;
   height: 100%;
   width: 100%;
+}
+.flex-text a {
+  width: 95%;
+}
+.flex-text button {
+  width: 5%;
+  height: 100%;
+  padding: 0;
+  color: #f44336;
 }

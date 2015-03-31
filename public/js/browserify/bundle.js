@@ -40991,7 +40991,7 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			React.createElement("div", null, 
-				React.createElement(AppBar, {title: "Title", onMenuIconButtonTouchTap: this.toggleLeftNav}), 
+				React.createElement(AppBar, {title: "Board Title", onMenuIconButtonTouchTap: this.toggleLeftNav}), 
 				React.createElement(LeftNav, {ref: "LeftNav", docked: false, menuItems: MENU_ITEMS}), 
 				React.createElement(ReactGridLayout, {className: "layout", cols: 12, rowHeight: 30}, 
 					React.createElement("div", {key: 1, _grid: {static: true, x: 0, y: 0, w: 3, h: 6}}, 
@@ -41063,6 +41063,15 @@ module.exports = React.createClass({
 		});
 		this.refs.LinkDialog.dismiss();
 	},
+	removeLink: function(i) {
+		var links = _.clone(this.state.links);
+		links = _.filter(links, function(link, n) {
+		  return n !== i;
+		});
+		this.setState({
+			links: links
+		});
+	},
 	render: function() {
 		return (
 			React.createElement(Paper, {innerClassName: "flex-form", zDepth: 1}, 
@@ -41091,10 +41100,14 @@ module.exports = React.createClass({
 		);
 	},
 	renderLinks: function() {
+		var self = this;
 		var links = this.state.links.map(function(link, i) {
 			return (
 				React.createElement("div", {key: i, className: "flex-text"}, 
-					React.createElement("a", {href: link.url, target: "_blank"}, link.title)
+					React.createElement("a", {href: link.url, target: "_blank"}, link.title), 
+					React.createElement(IconButton, {touch: true, onTouchTap: self.removeLink.bind(self, i)}, 
+						React.createElement("i", {className: "fa fa-times"})
+					)
 				)
 			);
 		});

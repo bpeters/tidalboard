@@ -57,6 +57,15 @@ module.exports = React.createClass({
 		});
 		this.refs.LinkDialog.dismiss();
 	},
+	removeLink: function(i) {
+		var links = _.clone(this.state.links);
+		links = _.filter(links, function(link, n) {
+		  return n !== i;
+		});
+		this.setState({
+			links: links
+		});
+	},
 	render: function() {
 		return (
 			<Paper innerClassName='flex-form' zDepth={1}>
@@ -85,10 +94,14 @@ module.exports = React.createClass({
 		);
 	},
 	renderLinks: function() {
+		var self = this;
 		var links = this.state.links.map(function(link, i) {
 			return (
 				<div key={i} className="flex-text">
 					<a href={link.url} target="_blank">{link.title}</a>
+					<IconButton touch={true} onTouchTap={self.removeLink.bind(self, i)}>
+						<i className="fa fa-times"></i>
+					</IconButton>
 				</div>
 			);
 		});
