@@ -5,56 +5,36 @@
 	display: none;
 }
 
-.flex-button {
+.flex-form {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
+}
+
+.flex-body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	height: 100%;
+	width: 100%;
 	button {
 		height: 100%;
 		width: 100%;
+		padding-top: 20px;
+		padding-bottom: 20px;
 		i {
 			font-size: 2em;
 		}
 	}
 }
 
-.flex-form {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	padding-bottom: 10px;
-	button {
-		margin-bottom: 10px;
-	}
-	i {
-		padding: 10px;
-		font-size: 2em;
-	}
-	.image-button {
-		padding-right: 10px;
-	}
-}
-
 .flex-text {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
 	height: 100%;
 	width: 100%;
-}
-
-.flex-button-bar {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: row;
-	height: 100%;
-	width: 100%;
-	margin-top: 20px;
-	button {
-		height: 100%;
-		width: 100%;
-	}
 }

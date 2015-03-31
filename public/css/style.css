@@ -2614,53 +2614,34 @@ hr {
 #props {
   display: none;
 }
-.flex-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.flex-button button {
-  height: 100%;
-  width: 100%;
-}
-.flex-button button i {
-  font-size: 2em;
-}
 .flex-form {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 10px;
 }
-.flex-form button {
-  margin-bottom: 10px;
+.flex-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
 }
-.flex-form i {
-  padding: 10px;
+.flex-body button {
+  height: 100%;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.flex-body button i {
   font-size: 2em;
-}
-.flex-form .image-button {
-  padding-right: 10px;
 }
 .flex-text {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-}
-.flex-button-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-  margin-top: 20px;
-}
-.flex-button-bar button {
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
   height: 100%;
   width: 100%;
 }
