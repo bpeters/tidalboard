@@ -247,13 +247,10 @@ input[type="submit"] {
 }
 /**
  * Re-set default cursor for disabled elements.
- *
- * Input types do not display default cursor if element contains styling
- * that overrides cursor.
  */
 button[disabled],
 html input[disabled] {
-  cursor: default !important;
+  cursor: default;
 }
 /**
  * Remove inner padding and border in Firefox 4+.
@@ -1694,10 +1691,6 @@ hr {
 .mui-menu .mui-nested-menu-item {
   position: relative;
 }
-.mui-menu .mui-nested-menu-item.mui-is-disabled {
-  color: rgba(0, 0, 0, 0.3);
-  cursor: default;
-}
 .mui-menu .mui-nested-menu-item.mui-open > .mui-menu {
   opacity: 1;
 }
@@ -1711,7 +1704,7 @@ hr {
 .mui-menu-item * {
   user-select: none;
 }
-.mui-menu-item:hover:not(.mui-is-disabled) {
+.mui-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.035);
 }
 .mui-menu-item .mui-menu-item-number {
@@ -1752,10 +1745,6 @@ hr {
 }
 .mui-menu-item.mui-is-selected {
   color: #ff4081;
-}
-.mui-menu-item.mui-is-disabled {
-  color: rgba(0, 0, 0, 0.3) !important;
-  cursor: default;
 }
 .mui-overlay {
   position: fixed;
@@ -2622,6 +2611,9 @@ hr {
 .mui-transition-slide-in.mui-is-down .mui-transition-slide-in-leave-active {
   transform: translate3d(0, 100%, 0);
 }
+#props {
+  display: none;
+}
 .flex-button {
   display: flex;
   justify-content: center;
@@ -2633,4 +2625,21 @@ hr {
 }
 .flex-button button i {
   font-size: 2em;
+}
+.flex-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+.flex-form button {
+  margin-bottom: 10px;
+}
+.flex-form i {
+  padding: 10px;
+  font-size: 2em;
+}
+.flex-form .image-button {
+  padding-right: 10px;
 }

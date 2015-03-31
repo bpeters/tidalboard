@@ -1,6 +1,10 @@
 @import "node_modules/material-ui/src/less/scaffolding.less";
 @import "node_modules/material-ui/src/less/components.less";
 
+#props {
+	display: none;
+}
+
 .flex-button {
 	display: flex;
 	justify-content: center;
@@ -11,5 +15,23 @@
 		i {
 			font-size: 2em;
 		}
+	}
+}
+
+.flex-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding-bottom: 10px;
+	button {
+		margin-bottom: 10px;
+	}
+	i {
+		padding: 10px;
+		font-size: 2em;
+	}
+	.image-button {
+		padding-right: 10px;
 	}
 }
