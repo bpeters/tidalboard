@@ -139,7 +139,7 @@ module.exports = React.createClass({
 		return (
 			<Dialog ref="LinkDialog" title="Add Link" actions={linkActions}>
 				<div className="flex-body">
-					<TextField hintText="URL" value={this.state.linkURL}onChange={this.handleLinkURLChange} />
+					<TextField hintText="URL" value={this.state.linkURL} onChange={this.handleLinkURLChange} />
 				</div>
 				<div className="flex-body">
 					<TextField hintText="Link Title" value={this.state.linkTitle} onChange={this.handleLinkTitleChange} />

@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var ReactGridLayout = require('react-grid-layout');
+var ResponsiveReactGridLayout = require('react-grid-layout').Responsive;
 var MUI = require('material-ui')
 var AppBar = MUI.AppBar;
 var MenuItem = MUI.MenuItem;
@@ -28,15 +28,21 @@ module.exports = React.createClass({
 		this.refs.LeftNav.toggle();
 	},
 	render: function() {
+		var layouts = {
+			lg: [{static: true, i: 1, x: 0, y: 0, w: 5, h: 6}],
+			md: [{static: true, i: 1, x: 0, y: 0, w: 4, h: 6}]
+		};
 		return (
 			<div>
-				<AppBar title="Board Title" onMenuIconButtonTouchTap={this.toggleLeftNav} />
+				<AppBar title="Title" onMenuIconButtonTouchTap={this.toggleLeftNav} />
 				<LeftNav ref='LeftNav' docked={false} menuItems={MENU_ITEMS} />
-				<ReactGridLayout className="layout" cols={12} rowHeight={30}>
-					<div key={1} _grid={{static: true, x: 0, y: 0, w: 3, h: 6}} >
+				<ResponsiveReactGridLayout className="layout" layouts={layouts} cols={12} rowHeight={30}
+						breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+						cols={{lg: 20, md: 16, sm: 12, xs: 8, xxs: 4}}>
+					<div key={1}>
 						<Widget />
 					</div>
-				</ReactGridLayout>
+				</ResponsiveReactGridLayout>
 			</div>
 		);
 	}
