@@ -1,16 +1,14 @@
 var React = require('react/addons');
+var SignUpForm = require('./SignUpForm.jsx')
 
 module.exports = React.createClass({
-	displayName: 'Home',
+	displayName: 'SignUp',
 	propTypes: {
 		params: React.PropTypes.object
 	},
 	render: function() {
-		console.log(this.props.params);
 		return (
-			<div>
-				Home
-			</div>
+			<SignUpForm params={this.props.params} />
 		);
 	}
 });

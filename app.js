@@ -12,31 +12,40 @@ app.set('views', __dirname + '/views');
 app.set('view cache', false);
 swig.setDefaults({ cache: false });
 
+var passport = require('passport');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var passport = require('passport');
 var flash = require('connect-flash');
-var passwordHash = require('password-hash');
-var LocalStrategy = require('passport-local').Strategy;
 
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(multer()); // for parsing multipart/form-data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(multer());
+app.use(cookieParser());
+app.use(session({secret: 'surfs up', saveUninitialized: true, resave: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 //public routes
 app.get('/', routes.index);
-app.get('/signup', routes.index);
-app.get('/login', routes.index);
+app.get('/signup', routes.signup);
+app.get('/login', routes.login);
 
-//api routes
-app.post('/api/signup', user.signup);
+//auth
+app.post('/signup', user.signup);
+app.post('/login', user.login);
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
 	console.log("Listening on " + port);
 });
+
+function ensureAuthenticated(req, res, next) {
+	if (req.isAuthenticated()) { return next(); }
+	res.redirect('/login');
+};
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

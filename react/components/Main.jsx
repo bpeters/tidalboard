@@ -1,5 +1,7 @@
 var React = require('react/addons');
-var Home = require('./Home.jsx')
+var Home = require('./Home.jsx');
+var SignUp = require('./SignUp.jsx');
+var LogIn = require('./LogIn.jsx');
 
 module.exports = React.createClass({
 	displayName: 'Main',
@@ -23,21 +25,17 @@ module.exports = React.createClass({
 	},
 	renderHome: function() {
 		return (
-			<Home />
+			<Home params={this.props.params} />
 		);
 	},
 	renderSignUp: function() {
 		return (
-			<div>
-				Sign Up
-			</div>
+			<SignUp params={this.props.params} />
 		);
 	},
 	renderLogIn: function() {
 		return (
-			<div>
-				Log In
-			</div>
+			<LogIn params={this.props.params} />
 		);
 	},
 });

@@ -29447,7 +29447,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./components/Main.jsx":254,"react-tap-event-plugin":74,"react/addons":75}],252:[function(require,module,exports){
+},{"./components/Main.jsx":256,"react-tap-event-plugin":74,"react/addons":75}],252:[function(require,module,exports){
 var React = require('react/addons');
 var App = require('./App.jsx');
 var App = React.createFactory(App);
@@ -29467,6 +29467,40 @@ if (typeof window !== 'undefined') {
 
 },{"./App.jsx":251,"react/addons":75}],253:[function(require,module,exports){
 var React = require('react/addons');
+
+module.exports = React.createClass({
+	displayName: 'Home',
+	propTypes: {
+		params: React.PropTypes.object
+	},
+	render: function() {
+		console.log(this.props.params);
+		return (
+			React.createElement("div", null, 
+				"Home"
+			)
+		);
+	}
+});
+
+},{"react/addons":75}],254:[function(require,module,exports){
+var React = require('react/addons');
+var LogInForm = require('./LogInForm.jsx')
+
+module.exports = React.createClass({
+	displayName: 'LogIn',
+	propTypes: {
+		params: React.PropTypes.object
+	},
+	render: function() {
+		return (
+			React.createElement(LogInForm, {params: this.props.params})
+		);
+	}
+});
+
+},{"./LogInForm.jsx":255,"react/addons":75}],255:[function(require,module,exports){
+var React = require('react/addons');
 var request = require('superagent');
 var Flex = require('../styles/Flex.jsx');
 
@@ -29475,11 +29509,15 @@ var TextField = MUI.TextField;
 var RaisedButton = MUI.RaisedButton;
 
 module.exports = React.createClass({
-	displayName: 'Home',
+	displayName: 'LogInForm',
+	propTypes: {
+		params: React.PropTypes.object
+	},
 	getInitialState: function() {
 		return {
 			email: null,
-			company: null
+			password: null,
+			error: null,
 		};
 	},
 	handleEmailChange: function(e) {
@@ -29487,38 +29525,43 @@ module.exports = React.createClass({
 			email: e.target.value
 		});
 	},
-	handleCompanyChange: function(e) {
+	handlePasswordChange: function(e) {
 		this.setState({
-			company: e.target.value
+			password: e.target.value
 		});
 	},
 	submitForm: function() {
+		var self = this;
 		request
-			.post('/api/signup')
-			.send({ email: this.state.email, company: this.state.company })
+			.post('/login')
+			.send({ email: this.state.email, password: this.state.password })
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-			 if (res.ok) {
-				 alert('yay got ' + JSON.stringify(res.body));
-			 } else {
-				 alert('Oh no! error ' + res.text);
-			 }
+				if (res.body.redirect) {
+					window.location = res.body.redirect;
+				} else {
+					self.setState({
+						error: res.body.error
+					});
+				}
 			});
 	},
 	render: function() {
 		return (
 			React.createElement("div", {style: Flex.form}, 
-				React.createElement(TextField, {hintText: "Email", value: this.state.email, onChange: this.handleEmailChange}), 
-				React.createElement(TextField, {hintText: "Company", value: this.state.company, onChange: this.handleCompanyChange}), 
+				React.createElement(TextField, {hintText: "Email", value: this.state.email, errorText: this.state.error, onChange: this.handleEmailChange}), 
+				React.createElement(TextField, {type: "password", hintText: "Password", value: this.state.password, onChange: this.handlePasswordChange}), 
 				React.createElement(RaisedButton, {label: "Submit", primary: true, onTouchTap: this.submitForm})
 			)
 		);
 	}
 });
 
-},{"../styles/Flex.jsx":255,"material-ui":2,"react/addons":75,"superagent":248}],254:[function(require,module,exports){
+},{"../styles/Flex.jsx":259,"material-ui":2,"react/addons":75,"superagent":248}],256:[function(require,module,exports){
 var React = require('react/addons');
-var Home = require('./Home.jsx')
+var Home = require('./Home.jsx');
+var SignUp = require('./SignUp.jsx');
+var LogIn = require('./LogIn.jsx');
 
 module.exports = React.createClass({
 	displayName: 'Main',
@@ -29542,26 +29585,110 @@ module.exports = React.createClass({
 	},
 	renderHome: function() {
 		return (
-			React.createElement(Home, null)
+			React.createElement(Home, {params: this.props.params})
 		);
 	},
 	renderSignUp: function() {
 		return (
-			React.createElement("div", null, 
-				"Sign Up"
-			)
+			React.createElement(SignUp, {params: this.props.params})
 		);
 	},
 	renderLogIn: function() {
 		return (
-			React.createElement("div", null, 
-				"Log In"
-			)
+			React.createElement(LogIn, {params: this.props.params})
 		);
 	},
 });
 
-},{"./Home.jsx":253,"react/addons":75}],255:[function(require,module,exports){
+},{"./Home.jsx":253,"./LogIn.jsx":254,"./SignUp.jsx":257,"react/addons":75}],257:[function(require,module,exports){
+var React = require('react/addons');
+var SignUpForm = require('./SignUpForm.jsx')
+
+module.exports = React.createClass({
+	displayName: 'SignUp',
+	propTypes: {
+		params: React.PropTypes.object
+	},
+	render: function() {
+		return (
+			React.createElement(SignUpForm, {params: this.props.params})
+		);
+	}
+});
+
+},{"./SignUpForm.jsx":258,"react/addons":75}],258:[function(require,module,exports){
+var React = require('react/addons');
+var request = require('superagent');
+var Flex = require('../styles/Flex.jsx');
+
+var MUI = require('material-ui');
+var TextField = MUI.TextField;
+var RaisedButton = MUI.RaisedButton;
+
+module.exports = React.createClass({
+	displayName: 'SignUpForm',
+	propTypes: {
+		params: React.PropTypes.object
+	},
+	getInitialState: function() {
+		return {
+			email: null,
+			company: null,
+			password: null,
+			password2: null,
+			error: null,
+		};
+	},
+	handleEmailChange: function(e) {
+		this.setState({
+			email: e.target.value
+		});
+	},
+	handleCompanyChange: function(e) {
+		this.setState({
+			company: e.target.value
+		});
+	},
+	handlePasswordChange: function(e) {
+		this.setState({
+			password: e.target.value
+		});
+	},
+	handlePassword2Change: function(e) {
+		this.setState({
+			password2: e.target.value
+		});
+	},
+	submitForm: function() {
+		var self = this;
+		request
+			.post('/signup')
+			.send({ email: this.state.email, company: this.state.company, password: this.state.password })
+			.set('Accept', 'application/json')
+			.end(function(err, res){
+				if (res.body.redirect) {
+					window.location = res.body.redirect;
+				} else {
+					self.setState({
+						error: res.body.error
+					});
+				}
+			});
+	},
+	render: function() {
+		return (
+			React.createElement("div", {style: Flex.form}, 
+				React.createElement(TextField, {hintText: "Email", value: this.state.email, errorText: this.state.error, onChange: this.handleEmailChange}), 
+				React.createElement(TextField, {hintText: "Company", value: this.state.company, onChange: this.handleCompanyChange}), 
+				React.createElement(TextField, {type: "password", hintText: "Password", value: this.state.password, onChange: this.handlePasswordChange}), 
+				React.createElement(TextField, {type: "password", hintText: "Confirm Password", value: this.state.password2, onChange: this.handlePassword2Change}), 
+				React.createElement(RaisedButton, {label: "Submit", primary: true, onTouchTap: this.submitForm})
+			)
+		);
+	}
+});
+
+},{"../styles/Flex.jsx":259,"material-ui":2,"react/addons":75,"superagent":248}],259:[function(require,module,exports){
 exports.form = {
 	display: 'flex',
 	justifyContent: 'center',
@@ -29569,4 +29696,4 @@ exports.form = {
 	flexDirection: 'column',
 };
 
-},{}]},{},[251,252,253,254,255]);
+},{}]},{},[251,252,253,254,255,256,257,258,259]);
