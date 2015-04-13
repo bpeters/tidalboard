@@ -9,7 +9,8 @@ if (typeof window !== 'undefined') {
 	window.onload = function() {
 		React.render(App({
 			title: props.title,
-			params: props.params
+			params: props.params,
+			url: props.url
 		}), document);
 	};
 }

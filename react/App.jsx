@@ -9,7 +9,8 @@ module.exports = React.createClass({
 	displayName: 'App',
 	propTypes: {
 		title: React.PropTypes.string,
-		params: React.PropTypes.object
+		params: React.PropTypes.object,
+		url: React.PropTypes.string
 	},
 	render: function() {
 		var json = safeStringify(this.props);
@@ -26,7 +27,7 @@ module.exports = React.createClass({
 					<link href="/css/style.css" rel="stylesheet" />
 				</head>
 				<body>
-					<Main params={this.props.params}/>
+					<Main params={this.props.params} url={this.props.url} />
 					<span id="props" dangerouslySetInnerHTML={{__html: json}}></span>
 					<script type="text/javascript" src="/js/browserify/bundle.js"></script>
 				</body>

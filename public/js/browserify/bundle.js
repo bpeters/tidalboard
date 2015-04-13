@@ -21772,7 +21772,8 @@ module.exports = React.createClass({
 	displayName: 'App',
 	propTypes: {
 		title: React.PropTypes.string,
-		params: React.PropTypes.object
+		params: React.PropTypes.object,
+		url: React.PropTypes.string
 	},
 	render: function() {
 		var json = safeStringify(this.props);
@@ -21789,7 +21790,7 @@ module.exports = React.createClass({
 					React.createElement("link", {href: "/css/style.css", rel: "stylesheet"})
 				), 
 				React.createElement("body", null, 
-					React.createElement(Main, {params: this.props.params}), 
+					React.createElement(Main, {params: this.props.params, url: this.props.url}), 
 					React.createElement("span", {id: "props", dangerouslySetInnerHTML: {__html: json}}), 
 					React.createElement("script", {type: "text/javascript", src: "/js/browserify/bundle.js"})
 				)
@@ -21798,7 +21799,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"./components/Main.jsx":176,"react/addons":2}],175:[function(require,module,exports){
+},{"./components/Main.jsx":177,"react/addons":2}],175:[function(require,module,exports){
 var React = require('react/addons');
 var App = require('./App.jsx');
 var App = React.createFactory(App);
@@ -21810,7 +21811,8 @@ if (typeof window !== 'undefined') {
 	window.onload = function() {
 		React.render(App({
 			title: props.title,
-			params: props.params
+			params: props.params,
+			url: props.url
 		}), document);
 	};
 }
@@ -21819,20 +21821,59 @@ if (typeof window !== 'undefined') {
 var React = require('react/addons');
 
 module.exports = React.createClass({
-	displayName: 'Main',
-	propTypes: {
-		params: React.PropTypes.object
-	},
-	toggleLeftNav: function() {
-		this.refs.LeftNav.toggle();
-	},
+	displayName: 'Home',
 	render: function() {
 		return (
 			React.createElement("div", null, 
-				"Hello World"
+				"Home"
 			)
 		);
 	}
 });
 
-},{"react/addons":2}]},{},[174,175,176]);
+},{"react/addons":2}],177:[function(require,module,exports){
+var React = require('react/addons');
+var Home = require('./Home.jsx')
+
+module.exports = React.createClass({
+	displayName: 'Main',
+	propTypes: {
+		params: React.PropTypes.object,
+		url: React.PropTypes.string
+	},
+	render: function() {
+		var page;
+		switch(this.props.url) {
+			case '/signup':
+				page = this.renderSignUp();
+				break;
+			case '/login':
+				page = this.renderLogIn();
+				break;
+			default:
+				page = this.renderHome();
+		};
+		return page;
+	},
+	renderHome: function() {
+		return (
+			React.createElement(Home, null)
+		);
+	},
+	renderSignUp: function() {
+		return (
+			React.createElement("div", null, 
+				"Sign Up"
+			)
+		);
+	},
+	renderLogIn: function() {
+		return (
+			React.createElement("div", null, 
+				"Log In"
+			)
+		);
+	},
+});
+
+},{"./Home.jsx":176,"react/addons":2}]},{},[174,175,176,177]);

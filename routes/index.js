@@ -13,10 +13,12 @@ function paramsFromReq(req) {
 }
 
 exports.index = function(req, res) {
+	var url = req.originalUrl;
 	var params = paramsFromReq(req);
 	var markup = React.renderToString(App({
 		title: 'Home',
-		params: params
+		params: params,
+		url: url
 	}));
 	res.send('<!DOCTYPE html>' + markup);
 };
