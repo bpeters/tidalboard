@@ -3,7 +3,7 @@ var app = express();
 var path = require('path');
 var swig  = require('swig');
 var routes = require('./routes');
-var model = require('./model');
+var user = require('./user');
 
 app.use(express.static(path.join(__dirname, '/public')));
 app.engine('html', swig.renderFile);
@@ -12,10 +12,26 @@ app.set('views', __dirname + '/views');
 app.set('view cache', false);
 swig.setDefaults({ cache: false });
 
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
+var passwordHash = require('password-hash');
+var LocalStrategy = require('passport-local').Strategy;
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(multer()); // for parsing multipart/form-data
+
 //public routes
 app.get('/', routes.index);
 app.get('/signup', routes.index);
 app.get('/login', routes.index);
+
+//api routes
+app.post('/api/signup', user.signup);
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
