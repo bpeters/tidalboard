@@ -23,7 +23,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 app.use(cookieParser());
-app.use(session({secret: 'surfs up', saveUninitialized: true, resave: true}));
+app.use(session({
+	secret: 'surfs up',
+	saveUninitialized: true,
+	resave: true,
+	cookie : {
+		maxAge: 3600000
+	},
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -32,10 +39,12 @@ app.use(flash());
 app.get('/', routes.index);
 app.get('/signup', routes.signup);
 app.get('/login', routes.login);
+app.get('/dashboard', ensureAuthenticated, routes.dashboard);
 
 //auth
 app.post('/signup', user.signup);
 app.post('/login', user.login);
+app.get('/logout', user.logout);
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {

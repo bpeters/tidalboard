@@ -30,20 +30,22 @@ passport.use('local-signup', new LocalStrategy({
 			])
 			.spread(function(user1, user2) {
 				if (user1 && user2) {
-					return done(null, false, { message: 'Both email ' + email + ' and company ' + company + ' are already in use.' });
+					return done(null, false, { message: '1' });
 				} else if (user1) {
-					return done(null, false, { message: email + ' is already in use.' });
+					return done(null, false, { message: '2' });
 				} else if (user2) {
-					return done(null, false, { message: company + ' is already in use.' });
+					return done(null, false, { message: '3' });
 				} else {
 					model.signUp(email, company, password, function(err, user) {
-						if (err) { return done(null, false, { message: err.message });}
+						if (err) {
+							return done(null, false, { message: err.message });
+						}
 						return done(null, user);
 					});
 				}
 			})
 			.fail(function (err) {
-				return done(err);
+				return done(null, false, { message: err.message });
 			});
 		});
 	}
@@ -55,12 +57,16 @@ passport.use('local-login', new LocalStrategy({
 	function(username, password, done) {
 		process.nextTick(function () {
 			model.getUserByEmail(username, function(err, user) {
-				if (err) { return done(null, false, { message: err.message });}
+				if (err) { 
+					return done(null, false, { message: err.message });
+				}
 				if (!user) {
-					return done(null, false, { message: 'Invalid email: ' + username });
+					return done(null, false, { message: '1' });
 				}
 				model.logIn(username, password, function(err, user) {
-					if (err) { return done(null, false, { message: 'Invalid password for ' + username }); }
+					if (err) {
+						return done(null, false, { message: err.message });
+					}
 					return done(null, user);
 				});
 			});
@@ -68,37 +74,20 @@ passport.use('local-login', new LocalStrategy({
 	}
 ));
 
-exports.signup = function(req, res, next) {
-	passport.authenticate('local-signup', function(err, user, info) {
-		if (err) { return next(err); }
-		if (!user) {
-			return res.send({
-				error: info.message
-			});
-		}
-		req.logIn(user, function(err) {
-			if (err) { return next(err); }
-			return res.send({
-				redirect: '/'
-			});
-		});
-	})(req, res, next)
-};
+exports.signup = passport.authenticate('local-signup', { 
+	successRedirect: '/',
+	failureRedirect: '/signup',
+	failureFlash: true
+});
 
-exports.login = function(req, res, next) {
-	passport.authenticate('local-login', function(err, user, info) {
-		if (err) { return next(err); }
-		if (!user) {
-			return res.send({
-				error: info.message
-			});
-		}
-		req.logIn(user, function(err) {
-			if (err) { return next(err); }
-			return res.send({
-				redirect: '/'
-			});
-		});
-	})(req, res, next)
+exports.login = passport.authenticate('local-login', { 
+	successRedirect: '/',
+	failureRedirect: '/login',
+	failureFlash: true
+});
+
+exports.logout = function(req, res){
+	req.logout();
+	res.redirect('/');
 };
 

@@ -2,6 +2,7 @@ var React = require('react/addons');
 var Home = require('./Home.jsx');
 var SignUp = require('./SignUp.jsx');
 var LogIn = require('./LogIn.jsx');
+var Dashboard = require('./Dashboard.jsx');
 
 module.exports = React.createClass({
 	displayName: 'Main',
@@ -17,6 +18,9 @@ module.exports = React.createClass({
 				break;
 			case '/login':
 				page = this.renderLogIn();
+				break;
+			case '/dashboard':
+				page = this.renderDashboard();
 				break;
 			default:
 				page = this.renderHome();
@@ -36,6 +40,11 @@ module.exports = React.createClass({
 	renderLogIn: function() {
 		return (
 			<LogIn params={this.props.params} />
+		);
+	},
+	renderDashboard: function() {
+		return (
+			<Dashboard params={this.props.params} />
 		);
 	},
 });

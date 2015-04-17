@@ -1,4 +1,6 @@
 var React = require('react/addons');
+var Grid = require('./Grid.jsx');
+var Card = require('./Card.jsx');
 var LogInForm = require('./LogInForm.jsx')
 
 module.exports = React.createClass({
@@ -8,7 +10,11 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return (
-			<LogInForm params={this.props.params} />
+			<Grid>
+				<Card>
+					<LogInForm params={this.props.params} />
+				</Card>
+			</Grid>
 		);
 	}
 });

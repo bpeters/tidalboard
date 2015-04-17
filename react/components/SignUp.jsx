@@ -1,5 +1,7 @@
 var React = require('react/addons');
-var SignUpForm = require('./SignUpForm.jsx')
+var Grid = require('./Grid.jsx');
+var Card = require('./Card.jsx');
+var SignUpForm = require('./SignUpForm.jsx');
 
 module.exports = React.createClass({
 	displayName: 'SignUp',
@@ -8,7 +10,11 @@ module.exports = React.createClass({
 	},
 	render: function() {
 		return (
-			<SignUpForm params={this.props.params} />
+			<Grid>
+				<Card>
+					<SignUpForm params={this.props.params} />
+				</Card>
+			</Grid>
 		);
 	}
 });

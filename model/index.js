@@ -8,16 +8,22 @@ Parse.initialize(parseApp, parseJavascript);
 
 var User = Parse.Object.extend("User");
 
+function setUserObj(res) {
+	var userObject = {
+		id: res.id,
+		company: res.get("company"),
+		companyId: res.get("companyId"),
+		email: res.get("email")
+	};
+	return userObject;
+}
+
 exports.logIn = function (username, password, callback) {
 	Parse.User.logIn(username, password, {
 		success: function(res) {
 			console.log(res.get('email') + ' logged in.');
-			var obj = {
-				id: res.id,
-				company: res.get("company"),
-				email: res.get("email")
-			};
-			return callback(null, obj);
+			var userObj = setUserObj(res);
+			return callback(null, userObj);
 		},
 		error: function(user, error) {
 			console.log("Error: " + error.code + " " + error.message);
@@ -27,21 +33,19 @@ exports.logIn = function (username, password, callback) {
 };
 
 exports.signUp = function (email, company, password, callback) {
+	var companyId = passwordHash.generate(company);
 	var user = new User();
 	user.set("email", email);
 	user.set("username", email);
 	user.set("company", company);
 	user.set("password", password);
 	user.set("isAdmin", true);
+	user.set("companyId", companyId);
 	user.signUp(null, {
 		success: function(res) {
 			console.log(res.get('email') + ' signed up.');
-			var obj = {
-				id: res.id,
-				company: res.get("company"),
-				email: res.get("email")
-			};
-			return callback(null, obj);
+			var userObj = setUserObj(res);
+			return callback(null, userObj);
 		},
 		error: function(user, error) {
 			console.log("Error: " + error.code + " " + error.message);
@@ -55,12 +59,8 @@ exports.getUserById = function (id, callback) {
 	query.get(id, {
 		success: function(res) {
 			console.log("Successfully retrieved " + res.get("email")  + ".");
-				var obj = {
-					id: res.id,
-					company: res.get("company"),
-					email: res.get("email")
-				};
-				return callback(null, obj);
+				var userObj = setUserObj(res);
+				return callback(null, userObj);
 		},
 		error: function(error) {
 			console.log("Error: " + error.code + " " + error.message);
@@ -76,12 +76,8 @@ exports.getUserByEmail = function (email, callback) {
 		success: function(results) {
 			if (results[0]) {
 				console.log("Successfully retrieved " + results[0].get("email")  + ".");
-				var obj = {
-					id: results[0].id,
-					username: results[0].get("company"),
-					email: results[0].get("email")
-				};
-				return callback(null, obj);
+				var userObj = setUserObj(results[0]);
+				return callback(null, userObj);
 			} else {
 				return callback(null, null);
 			}
@@ -100,12 +96,8 @@ exports.getUserByCompany= function (company, callback) {
 		success: function(results) {
 			if (results[0]) {
 				console.log("Successfully retrieved " + results[0].get("company")  + ".");
-				var obj = {
-					id: results[0].id,
-					username: results[0].get("company"),
-					email: results[0].get("email")
-				};
-				return callback(null, obj);
+				var userObj = setUserObj(results[0]);
+				return callback(null, userObj);
 			} else {
 				return callback(null, null);
 			}
